@@ -31,9 +31,25 @@ MENU = {
     }
 }
 
+
 resources = {
     "water": 300,
     "milk": 200,
     "coffee": 100,
+    "money": 0.0,
 }
 # TODO: 1. Print report of all coffee machine resources
+
+
+def print_report():
+    print(f"Water: {resources['water']}ml\n"
+          f"Milk: {resources['milk']}ml\n"
+          f"Coffee: {resources['coffee']}g\n"
+          f"Money: ${resources['money']}")
+
+
+commands = {'report': print_report}
+commands['report']()
+
+cmd = input("What would you like? (espresso/latte/cappuccino): ")
+commands[cmd]()
