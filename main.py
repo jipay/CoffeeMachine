@@ -3,42 +3,10 @@
 # Press ⌃R to execute it or replace it with your code.
 # Press Double ⇧ to search everywhere for classes, files, tool windows, actions, and settings.
 
-# TODO: 2. Check resources sufficient to make drink order
+from mechdatas import resources, MENU, coins
 
-MENU = {
-    "espresso": {
-        "ingredients": {
-            "water": 50,
-            "coffee": 18,
-        },
-        "cost": 1.5,
-    },
-    "latte": {
-        "ingredients": {
-            "water": 200,
-            "milk": 150,
-            "coffee": 24,
-        },
-        "cost": 2.5,
-    },
-    "cappuccino": {
-        "ingredients": {
-            "water": 250,
-            "milk": 100,
-            "coffee": 24,
-        },
-        "cost": 3.0,
-    }
-}
-
-
-resources = {
-    "water": 300,
-    "milk": 200,
-    "coffee": 100,
-    "money": 0.0,
-}
-# TODO: 1. Print report of all coffee machine resources
+alive = True
+credit = 0.0
 
 
 def print_report():
@@ -48,8 +16,55 @@ def print_report():
           f"Money: ${resources['money']}")
 
 
-commands = {'report': print_report}
-commands['report']()
+def operation(drink):
+    global credit
+    print("Please insert coins.")
+    new_credit = get_credit()
+    credit += new_credit
+    if credit < drink['cost']:
+        credit -= new_credit
+        print("Sorry that's not enough money. Money refunded.")
+    else:
+        # TODO: 1. Check if to much credit
+        resources['money'] += drink['cost']
+        credit -= drink['cost']
+        ingredient = drink['ingredients']
+        for i in ingredient:
+            resources[i] -= ingredient[i]
+        print(f"Here is your {drink}. Enjoy!")
 
-cmd = input("What would you like? (espresso/latte/cappuccino): ")
-commands[cmd]()
+
+def get_credit():
+    total = 0.0
+    for coin in coins:
+        value = input(f"how many {coin}?:")
+        total += float(value) * coins[coin]
+    return total
+
+
+def check_ressources(drink):
+    ingredient = drink['ingredients']
+    filled = True
+    for i in ingredient:
+        if ingredient[i] > resources[i]:
+            print(f"Sorry there is not enough {i}.")
+            filled = False
+    return filled
+
+
+def turn_off():
+    global alive
+    alive = False
+
+
+while alive:
+    cmd = input("What would you like? (espresso/latte/cappuccino): ")
+    while not (cmd == "off" or cmd == "report" or cmd == "espresso" or cmd == "latte" or cmd == "cappuccino"):
+        cmd = input("What would you like? (espresso/latte/cappuccino): ")
+    if cmd == "off":
+        turn_off()
+    elif cmd == "report":
+        print_report()
+    elif cmd == "latte" or cmd == "espresso" or cmd == "cappuccino":
+        if check_ressources(MENU[cmd]):
+            operation(MENU[cmd])
