@@ -3,7 +3,7 @@
 # Press ⌃R to execute it or replace it with your code.
 # Press Double ⇧ to search everywhere for classes, files, tool windows, actions, and settings.
 
-from mechdatas import resources, MENU, coins
+from mechdatas import resources, MENU, coins, commands
 
 alive = True
 credit = 0.0
@@ -62,12 +62,14 @@ def turn_off():
 
 while alive:
     cmd = input("What would you like? (espresso/latte/cappuccino): ")
-    while not (cmd == "off" or cmd == "report" or cmd == "espresso" or cmd == "latte" or cmd == "cappuccino"):
+    while cmd not in commands:
         cmd = input("What would you like? (espresso/latte/cappuccino): ")
     if cmd == "off":
         turn_off()
     elif cmd == "report":
         print_report()
+    elif cmd == "credit":
+        print(credit)
     elif cmd == "latte" or cmd == "espresso" or cmd == "cappuccino":
         if check_ressources(MENU[cmd]):
             operation(cmd)

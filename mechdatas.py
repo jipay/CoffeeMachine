@@ -39,3 +39,13 @@ coins = {
     "nickles": 0.05,
     "pennies": 0.01,
 }
+
+
+commands = [
+    "report",
+    "off",
+    "espresso",
+    "latte",
+    "cappuccino",
+    "credit",
+]
