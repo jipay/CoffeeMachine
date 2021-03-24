@@ -26,9 +26,9 @@ def operation(name):
         credit -= new_credit
         print("Sorry that's not enough money. Money refunded.")
     else:
-        # TODO: 1. Check if to much credit
         resources['money'] += drink['cost']
         credit -= drink['cost']
+        print(f"Here is {credit} in change.")
         ingredient = drink['ingredients']
         for i in ingredient:
             resources[i] -= ingredient[i]
@@ -39,6 +39,8 @@ def get_credit():
     total = 0.0
     for coin in coins:
         value = input(f"how many {coin}?:")
+        while not value.isdigit():
+            value = input(f"how many {coin}?:")
         total += float(value) * coins[coin]
     return total
 
