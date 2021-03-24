@@ -28,11 +28,12 @@ def operation(name):
     else:
         resources['money'] += drink['cost']
         credit -= drink['cost']
+        credit = round(credit, 2)
         print(f"Here is {credit} in change.")
         ingredient = drink['ingredients']
         for i in ingredient:
             resources[i] -= ingredient[i]
-        print(f"Here is your {name}. Enjoy!")
+        print(f"Here is your {name} ☕. Enjoy!")
 
 
 def get_credit():
