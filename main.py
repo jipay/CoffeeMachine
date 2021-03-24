@@ -16,8 +16,9 @@ def print_report():
           f"Money: ${resources['money']}")
 
 
-def operation(drink):
+def operation(name):
     global credit
+    drink = MENU[name]
     print("Please insert coins.")
     new_credit = get_credit()
     credit += new_credit
@@ -31,7 +32,7 @@ def operation(drink):
         ingredient = drink['ingredients']
         for i in ingredient:
             resources[i] -= ingredient[i]
-        print(f"Here is your {drink}. Enjoy!")
+        print(f"Here is your {name}. Enjoy!")
 
 
 def get_credit():
@@ -67,4 +68,4 @@ while alive:
         print_report()
     elif cmd == "latte" or cmd == "espresso" or cmd == "cappuccino":
         if check_ressources(MENU[cmd]):
-            operation(MENU[cmd])
+            operation(cmd)
